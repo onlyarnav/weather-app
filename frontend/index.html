@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breeze — Weather at a Glance</title>
+    <meta name="description" content="Breeze is a beautiful, minimalist weather app. Get current conditions, forecasts, and more for any city in the world.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- Animated background orbs -->
+    <div class="bg-orbs" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="app-container" id="app-container">
+
+        <!-- Header / Brand -->
+        <header class="app-header" id="app-header">
+            <div class="brand">
+                <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/><circle cx="12" cy="12" r="4"/></svg>
+                <span class="brand-name">Breeze</span>
+            </div>
+        </header>
+
+        <!-- Search -->
+        <div class="search-wrapper" id="search-wrapper">
+            <div class="search-box" id="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    class="search-input" 
+                    placeholder="Search any city…" 
+                    autocomplete="off"
+                    aria-label="Search for a city"
+                >
+                <div class="search-loader" id="search-loader" aria-hidden="true">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            <ul class="search-results" id="search-results" role="listbox" aria-label="City suggestions"></ul>
+        </div>
+
+        <!-- Welcome State -->
+        <div class="welcome-state" id="welcome-state">
+            <div class="welcome-icon-wrapper">
+                <svg class="welcome-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="26" cy="26" r="8" />
+                    <path d="M26 14v-4M26 42v-4M14 26h-4M42 26h-4M18.34 18.34l-2.83-2.83M36.49 36.49l-2.83-2.83M33.66 18.34l2.83-2.83M15.51 36.49l2.83-2.83"/>
+                    <path d="M44 36a10 10 0 0 0-19.8-2A8 8 0 1 0 22 50h22a10 10 0 0 0 0-14z"/>
+                </svg>
+            </div>
+            <h1 class="welcome-title">Check the weather</h1>
+            <p class="welcome-subtitle">Type a city name above to get started</p>
+        </div>
+
+        <!-- Weather Content (hidden by default) -->
+        <main class="weather-content" id="weather-content" style="display:none;">
+
+            <!-- Current Weather Card -->
+            <section class="current-card glass-card" id="current-card" aria-label="Current weather">
+                <div class="current-top">
+                    <div class="current-location">
+                        <svg class="pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <div>
+                            <h2 class="city-name" id="city-name">—</h2>
+                            <p class="region-name" id="region-name"></p>
+                        </div>
+                    </div>
+                    <p class="current-time" id="current-time"></p>
+                </div>
+                <div class="current-main">
+                    <div class="temp-group">
+                        <span class="temp-value" id="temp-value">—</span>
+                        <span class="temp-unit" id="temp-unit">°C</span>
+                    </div>
+                    <div class="condition-group">
+                        <img class="condition-icon" id="condition-icon" src="" alt="Weather condition icon" width="80" height="80">
+                        <span class="condition-text" id="condition-text">—</span>
+                    </div>
+                </div>
+                <div class="current-details" id="current-details">
+                    <div class="detail-item" id="detail-feels-like">
+                        <span class="detail-label">Feels like</span>
+                        <span class="detail-value" id="feels-like">—</span>
+                    </div>
+                    <div class="detail-item" id="detail-humidity">
+                        <span class="detail-label">Humidity</span>
+                        <span class="detail-value" id="humidity">—</span>
+                    </div>
+                    <div class="detail-item" id="detail-wind">
+                        <span class="detail-label">Wind</span>
+                        <span class="detail-value" id="wind">—</span>
+                    </div>
+                    <div class="detail-item" id="detail-uv">
+                        <span class="detail-label">UV Index</span>
+                        <span class="detail-value" id="uv-index">—</span>
+                    </div>
+                    <div class="detail-item" id="detail-pressure">
+                        <span class="detail-label">Pressure</span>
+                        <span class="detail-value" id="pressure">—</span>
+                    </div>
+                    <div class="detail-item" id="detail-visibility">
+                        <span class="detail-label">Visibility</span>
+                        <span class="detail-value" id="visibility">—</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Forecast Section -->
+            <section class="forecast-section" id="forecast-section" aria-label="3-day forecast">
+                <h3 class="section-title">3-Day Forecast</h3>
+                <div class="forecast-cards" id="forecast-cards">
+                    <!-- Populated via JS -->
+                </div>
+            </section>
+
+            <!-- Hourly Graph (Today) -->
+            <section class="hourly-section glass-card" id="hourly-section" aria-label="Hourly forecast">
+                <h3 class="section-title">Today's Hourly</h3>
+                <div class="hourly-scroll" id="hourly-scroll">
+                    <!-- Populated via JS -->
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Error State -->
+        <div class="error-state" id="error-state" style="display:none;">
+            <p class="error-text" id="error-text">Something went wrong. Please try again.</p>
+        </div>
+
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
